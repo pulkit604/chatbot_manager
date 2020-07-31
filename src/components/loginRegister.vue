@@ -1,7 +1,7 @@
 <template>
   <div>
-      <v-btn color="error" dark large @click="showRegister = !showRegister">Register</v-btn>
-      <v-btn class="ml-2" color="error" dark large @click="showRegister = !showRegister">Login</v-btn>
+      <v-btn color="error" dark large @click="showRegister = true">Register</v-btn>
+      <v-btn class="ml-2" color="error" dark large @click="showRegister = false">Login</v-btn>
       <div v-show="showRegister">
           <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
           <v-text-field
@@ -18,6 +18,7 @@
                   v-model="registerForm.pass"
                   label="Password"
                   required
+                  type="password"
           ></v-text-field>
           <v-btn class="mr-4" @click="doRegister" color="green">Register</v-btn>
       </div>
@@ -72,6 +73,8 @@
                  .then(response => response.json())
                     .then(response => {
                         localStorage.setItem('loginToken', response.token);
+                        this.$route.push({ path: '/' });
+                        this.loggedIn = true;
                     })
              .catch(error => {console.log(error);})
              ;
@@ -89,6 +92,8 @@
                  .then(response => response.json())
                  .then(response => {
                      localStorage.setItem('loginToken', response.token);
+                     this.$route.push({ path: '/' });
+                     this.loggedIn = true;
                  });
             },
         },
