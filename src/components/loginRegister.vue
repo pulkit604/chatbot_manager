@@ -77,7 +77,7 @@
              ;
             },
             doLogin() {
-             fetch('http://sporadic-rod.000webhostapp.com/api/?login',  {
+             fetch(CONST.API_HOST + '?login',  {
                     method : 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body   : JSON.stringify({
