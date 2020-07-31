@@ -2,7 +2,7 @@
     <div>
         <h1>BOT Edit: {{ botName }}</h1>
         <h4>Add using CSV</h4>
-        <input id="file" type="file" accept=".csv" @change="extractQuestionBank"/>
+        <v-file-input id="file" multiple label="File input" accept=".csv" @change="extractQuestionBank"></v-file-input>
         <h2>Question List</h2>
         <vue-editable-grid
             :column-defs="tableCols"
@@ -13,10 +13,10 @@
             :row-data="questionBank">
             <template v-slot:header> Question Bank</template>
         </vue-editable-grid>
-        <h3>Update To DB</h3>
-        <button @click="updateToDB()">Update Database</button>
+        <h4 class="mt-10">Update To DB</h4>
+        <v-btn @click="updateToDB()" color="yellow" class="mt-5">Update Database</v-btn>
         <br>
-        <button v-show="showGetProjectScriptButton" @click="getCiscoProjectScript()">Get Cisco Project Script</button>
+        <v-btn v-show="showGetProjectScriptButton" @click="getCiscoProjectScript()" color="orange">Get Cisco Project Script</v-btn>
     </div>
 </template>
 
@@ -56,10 +56,9 @@
             getCiscoProjectScript() {
 
             },
-            extractQuestionBank(e) {
-                const file = e.target.files[0];
+            extractQuestionBank() {
+                const file = document.querySelector("#file").files[0];
                 const reader = new FileReader();
-
                 reader.onload = e => e.target.result.split('\n').forEach(v => this.questionBank.push({ question: v.split(',')[0], answer: v.split(',')[1]}));
                 reader.readAsText(file);
                 setTimeout(() => { document.querySelector('.header-content').click(); }, 2000);

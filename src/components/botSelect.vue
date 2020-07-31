@@ -1,20 +1,44 @@
 <template>
   <div>
     <h2>Select your Bot or Create new</h2>
-    <div class="container">
-      <div>Already existing</div>
-      <ul style="list-style: none">
-        <li class="bot_list_item" v-for="botName in botList" :key="'existing_bot' + botName"><div @click="goToBotEdit(botName)">{{ botName }}</div></li>
-      </ul>
+      <h4>Already existing</h4>
+      <v-card
+              class="mx-auto"
+              max-width="400"
+              tile
+      >
+        <v-list
+            :dense=true
+            :rounded=true
+        >
+          <v-subheader>BOT Name</v-subheader>
+          <v-list-item-group v-model="botList" color="primary">
+            <v-list-item
+                    v-for="botName in botList"
+                    :key="'existing_bot' + botName"
+            >
+              <v-list-item-content>
+                <v-list-item-title @click="goToBotEdit(botName)" v-html="botName"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-card>
+      <h2>Or</h2>
       <div>Create New Bot</div>
         <form>
-          <label>Bot Name</label>
-          <input v-model="botName"/>
-          <label>Purpose</label>
-          <input v-model="purpose"/>
-          <button @click="createBot()">Create</button>
+          <v-text-field
+                  v-model="botName"
+                  label="Bot Name"
+                  required
+          ></v-text-field>
+          <v-text-field
+                  v-model="purpose"
+                  label="Purpose"
+                  required
+          ></v-text-field>
+          <v-btn class="mr-4" @click="createBot" color="green">Create New</v-btn>
         </form>
-    </div>
   </div>
 </template>
 

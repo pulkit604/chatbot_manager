@@ -1,24 +1,39 @@
 <template>
   <div>
-      <button @click="showRegister = !showRegister;">Register</button>
-      <button @click="showLogin = !showLogin;">Login</button>
+      <v-btn color="error" dark large @click="showRegister = !showRegister">Register</v-btn>
+      <v-btn class="ml-2" color="error" dark large @click="showRegister = !showRegister">Login</v-btn>
       <div v-show="showRegister">
           <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
-          <label for="inputName" class="sr-only">Name</label>
-          <input type="text" id="inputName" v-model="registerForm.name" class="form-control" placeholder="Name" required="" autofocus="">
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" v-model="registerForm.email" class="form-control" placeholder="Email address" required="" autofocus="">
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" v-model="registerForm.pass" class="form-control" placeholder="Password" required="">
-          <button class="btn btn-lg btn-primary btn-block" @click="doRegister()">Register</button>
+          <v-text-field
+                  v-model="registerForm.name"
+                  label="Name"
+                  required
+          ></v-text-field>
+          <v-text-field
+                  v-model="registerForm.email"
+                  label="Email address"
+                  required
+          ></v-text-field>
+          <v-text-field
+                  v-model="registerForm.pass"
+                  label="Password"
+                  required
+          ></v-text-field>
+          <v-btn class="mr-4" @click="doRegister" color="green">Register</v-btn>
       </div>
-      <div v-show="showLogin">
+      <div v-show="!showRegister">
           <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" v-model="loginForm.email"  id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" v-model="loginForm.pass" id="inputPassword" class="form-control" placeholder="Password" required="">
-          <button class="btn btn-lg btn-primary btn-block" @click="doLogin()">Sign in</button>
+          <v-text-field
+                  v-model="loginForm.email"
+                  label="Email address"
+                  required
+          ></v-text-field>
+          <v-text-field
+                  v-model="loginForm.pass"
+                  label="Password"
+                  required
+          ></v-text-field>
+          <v-btn class="mr-4" @click="doLogin" color="green">Sign in</v-btn>
       </div>
   </div>
 </template>
@@ -31,7 +46,6 @@
             return {
             loggedIn: false,
             showRegister: false,
-            showLogin: false,
             authToken: '',
             loginForm: {
               email: 'guppul@gmail.com',

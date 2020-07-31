@@ -4,7 +4,7 @@
 </template>
 
 <script>
-    import loginRegister from '@/components/loginRegister.vue';
+    import loginRegister from "../components/loginRegister.vue";
     import botSelect from "../components/botSelect.vue";
     export default {
         name: "HomePage",

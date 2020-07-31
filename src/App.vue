@@ -1,41 +1,45 @@
 <template>
-  <div>
-    <router-view></router-view>
-    <div id="app"></div>
-  </div>
+  <v-app>
+    <v-app-bar
+            app
+            elevate-on-scroll
+            color="teal lighten-3"
+            dark
+            hide-on-scroll
+            scroll-target="#scrolling-techniques-4"
+    >
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+      <v-toolbar-title>Chatbot Manager</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
+    </v-app-bar>
+    <v-container class="mt-15 align-self-center">
+      <router-view></router-view>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
-  import router from './router.js';
+
 export default {
   name: 'App',
-  router,
-  created() {
-    this.isLoggedIn();
-  },
-  methods: {
-    isLoggedIn() {
-      fetch('http://sporadic-rod.000webhostapp.com/api/?check_token', {
-        method : 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body   : JSON.stringify({
-                    token: localStorage.getItem('loginToken')
-        })
-      })
-          .then(response => response.json())
-          .then(response => {if (response.valid) this.loggedIn = true;});
-    }
-  },
-}
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  data: () => ({
+    //
+  }),
+};
+</script>
+<style></style>
