@@ -1,29 +1,24 @@
 <template>
   <v-app>
     <v-app-bar
-            app
-            elevate-on-scroll
-            color="teal lighten-3"
-            dark
-            hide-on-scroll
-            scroll-target="#scrolling-techniques-4"
+        app
+        elevate-on-scroll
+        color="teal lighten-3"
+        dark
+        hide-on-scroll
+        scroll-target="#scrolling-techniques-4"
     >
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-      <v-toolbar-title>Chatbot Manager</v-toolbar-title>
-
+      <v-toolbar-title @click="gotToHome">Chatbot Manager</v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
+      <v-btn
+          class="ma-2"
+          tile
+          color="indigo"
+          @click="doLogout"
+          v-show="loggedIn"
+          dark>
+        Logout
       </v-btn>
     </v-app-bar>
     <v-container class="mt-15 align-self-center">
@@ -33,13 +28,56 @@
 </template>
 
 <script>
-
+import CONST from './const.js';
+import router from './router.js';
 export default {
   name: 'App',
-
-  data: () => ({
-    //
-  }),
+  created() {
+    this.isLoggedIn();
+  },
+  computed: {
+    loggedIn: function () {
+      return localStorage.getItem('loggedIn') != "false";
+    }
+  },
+  methods: {
+    isLoggedIn() {
+      fetch(CONST.API_HOST + '?check_token', {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify({
+          token: localStorage.getItem('loginToken'),
+        })
+      })
+      .then(response => response.json())
+      .then(response => {
+        if(response.tokenValid) {
+          localStorage.setItem('loggedIn', true);
+        }
+        router.push({ path: '/home'});
+      });
+    },
+    doLogout() {
+      fetch(CONST.API_HOST + '?check_token', {
+        method : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body   : JSON.stringify({
+          token: localStorage.getItem('loginToken'),
+        })
+      })
+       .then(response => response.json())
+       .then(response => {
+         if(response.tokenValid) {
+           localStorage.setItem('loginToken', null);
+           localStorage.setItem('loggedIn', false);
+           location.reload();
+         }
+       });
+    },
+    gotToHome() {
+      router.push({path: '/home'});
+    }
+  },
 };
 </script>
 <style></style>
