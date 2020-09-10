@@ -42,7 +42,6 @@
 
 <script>
 import CONST from '../const.js';
-import router from '../router.js';
 export default {
   name: "loginRegister",
   data() {
@@ -74,8 +73,7 @@ export default {
       .then(response => response.json())
       .then(response => {
         localStorage.setItem('loginToken', response.accessToken);
-        router.push({ path: '/' });
-        location.reload();
+        this.$root.$emit('update_component');
       })
       .catch(error => {console.log(error);})
       ;
@@ -93,8 +91,7 @@ export default {
       .then(response => response.json())
       .then(response => {
         localStorage.setItem('loginToken', response.accessToken);
-        router.push({ path: '/' });
-        location.reload();
+        this.$root.$emit('update_component');
       });
     },
   },
