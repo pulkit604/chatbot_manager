@@ -14,7 +14,7 @@ export default {
   },
     computed: {
       loggedIn: function () {
-        return localStorage.getItem('loggedIn') != "false";
+        return localStorage.getItem('loggedIn') && localStorage.getItem('loggedIn') != "false";
         }
     }
 }
