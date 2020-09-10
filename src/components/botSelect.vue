@@ -18,7 +18,7 @@
                 :key="'existing_bot' + botName"
             >
               <v-list-item-content>
-                <v-list-item-title @click="goToBotEdit(botName)" v-html="botName"></v-list-item-title>
+                <v-list-item-title @click.prevent="goToBotEdit(botName)" v-html="botName"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
@@ -65,6 +65,7 @@ export default {
   },
   methods: {
     goToBotEdit(name){
+      if(!name) return;
       router.push({ path: 'edit-bot/' + name});
     },
     createBot() {
