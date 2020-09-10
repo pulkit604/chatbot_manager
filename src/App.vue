@@ -34,10 +34,11 @@ export default {
   name: 'App',
   created() {
     this.isLoggedIn();
+    this.$on('update_component', this.updateComponent);
   },
   computed: {
     loggedIn: function () {
-      return localStorage.getItem('loggedIn') != "false";
+      return localStorage.getItem('loggedIn') && localStorage.getItem('loggedIn') != "false";
     }
   },
   methods: {
@@ -54,11 +55,14 @@ export default {
         if(response.tokenValid) {
           localStorage.setItem('loggedIn', true);
         }
-        router.push({ path: '/home'});
+      })
+      .catch(() => {
+        localStorage.setItem('loggedIn', false);
       });
+      router.push({ path: '/home'});
     },
     doLogout() {
-      fetch(CONST.API_HOST + '?check_token', {
+      fetch(CONST.API_HOST + '?logout', {
         method : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body   : JSON.stringify({
@@ -67,7 +71,7 @@ export default {
       })
        .then(response => response.json())
        .then(response => {
-         if(response.tokenValid) {
+         if(response.success) {
            localStorage.setItem('loginToken', null);
            localStorage.setItem('loggedIn', false);
            location.reload();
@@ -76,7 +80,10 @@ export default {
     },
     gotToHome() {
       router.push({path: '/home'});
-    }
+    },
+    updateComponent() {
+      this.$forceUpdate();
+    },
   },
 };
 </script>
